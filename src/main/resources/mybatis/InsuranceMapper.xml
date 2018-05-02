@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soar.basicframework.insurance.dao.InsuranceDao">
+    <!-- 投保人result -->
+    <resultMap id="policyholderInformation" type="com.soar.basicframework.insurance.model.PolicyholderInformation">
+        <result column="p_id" property="pId" jdbcType="VARCHAR"></result>
+        <result column="p_name" property="pName" jdbcType="VARCHAR"></result>
+        <result column="p_card_type" property="pCardType" jdbcType="INTEGER"></result>
+        <result column="p_card" property="pCard" jdbcType="VARCHAR"></result>
+        <result column="p_phone" property="pPhone" jdbcType="INTEGER"></result>
+        <result column="p_email" property="pEmail" jdbcType="VARCHAR"></result>
+        <result column="p_create_time" property="pCreateTime" jdbcType="TIMESTAMP"></result>
+        <result column="p_item" property="pItem" jdbcType="INTEGER"></result>
+        <result column="p_isAppend" property="pIsAppend" jdbcType="INTEGER"></result>
+        <result column="p_insurance_date" property="pInsuranceDate" jdbcType="DATE"></result>
+        <result column="p_price" property="pPrice" jdbcType="DECIMAL"></result>
+        <result column="p_isPay" property="pIsPay" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <!-- 被投保人信息 -->
+    <resultMap id="insuredPersonInformation" type="com.soar.basicframework.insurance.model.InsuredPersonInformation">
+        <result column="i_id" property="iId" jdbcType="VARCHAR"></result>
+        <result column="p_id" property="pId" jdbcType="VARCHAR"></result>
+        <result column="i_p_relation" property="IPRelation" jdbcType="INTEGER"></result>
+        <result column="i_name" property="iName" jdbcType="VARCHAR"></result>
+        <result column="i_card_type" property="iCardType" jdbcType="INTEGER"></result>
+        <result column="i_card" property="iCard" jdbcType="VARCHAR"></result>
+        <result column="i_birth" property="iBirth" jdbcType="DATE"></result>
+        <result column="i_create_time" property="iCreateTime" jdbcType="TIMESTAMP"></result>
+    </resultMap>
+    <!-- 插入投保人信息 -->
+    <insert id="insert" parameterType="com.soar.basicframework.insurance.model.PolicyholderInformation">
+      INSERT INTO
+        `tb_policyholder_information` (
+            `p_id`,
+            `p_name`,
+            `p_card_type`,
+            `p_card`,
+            `p_phone`,
+            `p_email`,
+            `p_create_time`,
+            `p_item`,
+            `p_isAppend`,
+            `p_insurance_date`,
+            `p_price`,
+            `p_isPay`)
+      VALUES (
+          #{pId,jdbcType=VARCHAR},
+          #{pName,jdbcType=VARCHAR},
+          #{pCardType,jdbcType=INTEGER},
+          #{pCard,jdbcType=VARCHAR},
+          #{pPhone,jdbcType=INTEGER},
+          #{pEmail,jdbcType=VARCHAR},
+          #{pCreateTime,jdbcType=TIMESTAMP},
+          #{pItem,jdbcType=INTEGER},
+          #{pIsAppend,jdbcType=INTEGER},
+          #{pInsuranceDate,jdbcType=DATE},
+          #{pPrice,jdbcType=DECIMAL},
+          #{pIsPay,jdbcType=INTEGER}
+          )
+    </insert>
+</mapper>

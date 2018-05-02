@@ -1,6 +1,7 @@
 package com.soar.basicframework.insurance.controller;
 
 import com.soar.basicframework.constant.EmployeeResultStatus;
+import com.soar.basicframework.insurance.model.InsuredPersonInformation;
 import com.soar.basicframework.insurance.model.PolicyholderInformation;
 import com.soar.basicframework.insurance.service.InsuranceService;
 import com.soar.basicframework.json.JsonResult;
@@ -19,21 +20,21 @@ import java.util.List;
  */
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/employee")
+@RequestMapping("/insurance")
 public class InsuranceController {
 
     @Resource
-    private InsuranceService employeeService;
+    private InsuranceService insuranceService;
 
     /**
      * 检查员工输入的信息是否正确
      * @return
      */
     @ResponseBody
-    @RequestMapping("/checkEmployee")
-    public Object checkEmployee() {
+    @RequestMapping("/insurance")
+    public Object insurance(PolicyholderInformation policyholderInformation) {
         PolicyholderInformation employee = new PolicyholderInformation();
-        List<PolicyholderInformation> employeeList = employeeService.getList(employee);
+        List<PolicyholderInformation> employeeList = insuranceService.getList(employee);
         if(null == employeeList || employeeList.size() == 0){
             return JsonResult.fail(EmployeeResultStatus.EMPLOYEE_NOT_EXIST);
         }
