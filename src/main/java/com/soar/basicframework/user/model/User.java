@@ -2,7 +2,7 @@ package com.soar.basicframework.user.model;
 
 /**
  * user实体类demo
- * @author xueyi
+ * @author soar
  * @date 2018/4/21
  */
 public class User {
