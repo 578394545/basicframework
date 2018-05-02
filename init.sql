@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `tb_employee` (
   `e_name` varchar(50) NOT NULL COMMENT '员工姓名'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工信息表';
 
--- 正在导出表  jingji_insurance.tb_employee 的数据：~0 rows (大约)
+-- 正在导出表  jingji_insurance.tb_employee 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `tb_employee` DISABLE KEYS */;
 INSERT INTO `tb_employee` (`e_number`, `e_name`) VALUES
 	(123123, '张三');
@@ -55,8 +55,13 @@ CREATE TABLE IF NOT EXISTS `tb_policyholder_information` (
   `p_phone` int(11) NOT NULL COMMENT '投保人手机号码',
   `p_email` varchar(100) NOT NULL COMMENT '投保人电子邮箱',
   `p_create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `p_item` int(1) NOT NULL DEFAULT '1' COMMENT '投保项目（1-经济版；2-豪华版；3-尊贵版）',
+  `p_isAppend` int(1) NOT NULL DEFAULT '0' COMMENT '是否附加一年期营运交通工具乘意险（0-否；1-是）',
+  `p_insurance_date` date NOT NULL DEFAULT '2018-10-01' COMMENT '投保日期（默认为每年10月1日）',
+  `p_price` decimal(10,2) NOT NULL COMMENT '投保总价格',
+  `p_isPay` int(1) NOT NULL DEFAULT '0' COMMENT '是否付款(0-否；1-是)',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投保信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投保人信息表';
 
 -- 正在导出表  jingji_insurance.tb_policyholder_information 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `tb_policyholder_information` DISABLE KEYS */;
