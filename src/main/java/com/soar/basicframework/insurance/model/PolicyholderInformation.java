@@ -1,5 +1,6 @@
 package com.soar.basicframework.insurance.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -36,6 +37,127 @@ public class PolicyholderInformation {
      * 创建时间.
      */
     private Date pCreateTime;
+
+    /**
+     * 是否附加一年期营运交通工具乘意险（0-否；1-是）.
+     */
+    private Integer pIsAppend; 
+    /**
+     * 投保日期.
+     */
+    private Date pInsuranceDate; 
+    /**
+     * 总投保金额.
+     */
+    private BigDecimal pPrice; 
+    /**
+     * 投保项目（1-经济版；2-豪华版；3-尊贵版）.
+     */
+    private Integer pItem; 
+    /**
+     * 是否付款(0-否；1-是).
+     */
+    private Integer pIsPay; 
+    /**
+     * 设定是否附加一年期营运交通工具乘意险（0-否；1-是）. <br />
+     *
+     * @param pIsAppend 是否附加一年期营运交通工具乘意险（0-否；1-是）
+     */
+    public void setPIsAppend(Integer pIsAppend) {
+
+        this.pIsAppend = pIsAppend;
+    }
+
+    /**
+     * 取得是否附加一年期营运交通工具乘意险（0-否；1-是）. <br />
+     *
+     * @return 是否附加一年期营运交通工具乘意险（0-否；1-是）
+     */
+    public Integer getPIsAppend() {
+
+        return pIsAppend;
+    }
+
+    /**
+     * 设定投保日期. <br />
+     *
+     * @param pInsuranceDate 投保日期
+     */
+    public void setPInsuranceDate(Date pInsuranceDate) {
+
+        this.pInsuranceDate = pInsuranceDate;
+    }
+
+    /**
+     * 取得投保日期. <br />
+     *
+     * @return 投保日期
+     */
+    public Date getPInsuranceDate() {
+
+        return pInsuranceDate;
+    }
+
+    /**
+     * 设定总投保金额. <br />
+     *
+     * @param pPrice 总投保金额
+     */
+    public void setPPrice(BigDecimal pPrice) {
+
+        this.pPrice = pPrice;
+    }
+
+    /**
+     * 取得总投保金额. <br />
+     *
+     * @return 总投保金额
+     */
+    public BigDecimal getPPrice() {
+
+        return pPrice;
+    }
+
+    /**
+     * 设定投保项目（1-经济版；2-豪华版；3-尊贵版）. <br />
+     *
+     * @param pItem 投保项目（1-经济版；2-豪华版；3-尊贵版）
+     */
+    public void setPItem(Integer pItem) {
+
+        this.pItem = pItem;
+    }
+
+    /**
+     * 取得投保项目（1-经济版；2-豪华版；3-尊贵版）. <br />
+     *
+     * @return 投保项目（1-经济版；2-豪华版；3-尊贵版）
+     */
+    public Integer getPItem() {
+
+        return pItem;
+    }
+
+    /**
+     * 设定是否付款(0-否；1-是). <br />
+     *
+     * @param pIsPay 是否付款(0-否；1-是)
+     */
+    public void setPIsPay(Integer pIsPay) {
+
+        this.pIsPay = pIsPay;
+    }
+
+    /**
+     * 取得是否付款(0-否；1-是). <br />
+     *
+     * @return 是否付款(0-否；1-是)
+     */
+    public Integer getPIsPay() {
+
+        return pIsPay;
+    }
+
     /**
      * 设定投保人姓名. <br />
      *
