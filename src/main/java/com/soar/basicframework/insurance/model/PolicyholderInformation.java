@@ -24,7 +24,7 @@ public class PolicyholderInformation {
     /**
      * 投保人手机号码.
      */
-    private Integer pPhone;
+    private String pPhone;
     /**
      * 投保人电子邮箱.
      */
@@ -223,7 +223,7 @@ public class PolicyholderInformation {
      *
      * @param pPhone 投保人手机号码
      */
-    public void setPPhone(Integer pPhone) {
+    public void setPPhone(String pPhone) {
 
         this.pPhone = pPhone;
     }
@@ -233,7 +233,7 @@ public class PolicyholderInformation {
      *
      * @return 投保人手机号码
      */
-    public Integer getPPhone() {
+    public String getPPhone() {
 
         return pPhone;
     }

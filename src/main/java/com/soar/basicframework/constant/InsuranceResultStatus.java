@@ -7,8 +7,8 @@ import com.soar.basicframework.utils.ResultStatus;
  * @author Soar
  * @date 2018/5/2
  */
-public class EmployeeResultStatus {
+public class InsuranceResultStatus {
 
-	public static final ResultStatus EMPLOYEE_NOT_EXIST = new ResultStatus(100010201, "员工不存在,验证不通过！");
+	public static final ResultStatus INSURED_CANNOT_BE_EMPTY = new ResultStatus(100010301, "被投保人不能为空");
 
 }

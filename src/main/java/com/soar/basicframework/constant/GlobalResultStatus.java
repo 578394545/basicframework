@@ -10,7 +10,9 @@ import com.soar.basicframework.utils.ResultStatus;
 public class GlobalResultStatus {
 	public static final ResultStatus SUCCESS = new ResultStatus(0, "成功");
 
-	public static final ResultStatus ERROR = new ResultStatus(100010200, "失败");
-	public static final ResultStatus PARAM_MISSING = new ResultStatus(100010201, "缺少参数");
+	public static final ResultStatus ERROR = new ResultStatus(100010101, "失败");
+	public static final ResultStatus PARAM_MISSING = new ResultStatus(100010102, "缺少参数");
+	public static final ResultStatus BAD_MAILBOX_FORMAT = new ResultStatus(100010103, "邮箱格式错误！");
+	public static final ResultStatus BAD_PHONE_FORMAT = new ResultStatus(100010104, "手机号码格式错误！");
 
 }

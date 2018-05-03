@@ -8,7 +8,7 @@
         <result column="p_name" property="pName" jdbcType="VARCHAR"></result>
         <result column="p_card_type" property="pCardType" jdbcType="INTEGER"></result>
         <result column="p_card" property="pCard" jdbcType="VARCHAR"></result>
-        <result column="p_phone" property="pPhone" jdbcType="INTEGER"></result>
+        <result column="p_phone" property="pPhone" jdbcType="VARCHAR"></result>
         <result column="p_email" property="pEmail" jdbcType="VARCHAR"></result>
         <result column="p_create_time" property="pCreateTime" jdbcType="TIMESTAMP"></result>
         <result column="p_item" property="pItem" jdbcType="INTEGER"></result>
@@ -50,7 +50,7 @@
           #{pName,jdbcType=VARCHAR},
           #{pCardType,jdbcType=INTEGER},
           #{pCard,jdbcType=VARCHAR},
-          #{pPhone,jdbcType=INTEGER},
+          #{pPhone,jdbcType=VARCHAR},
           #{pEmail,jdbcType=VARCHAR},
           #{pCreateTime,jdbcType=TIMESTAMP},
           #{pItem,jdbcType=INTEGER},
