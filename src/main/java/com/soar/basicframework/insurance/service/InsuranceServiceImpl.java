@@ -3,11 +3,15 @@ package com.soar.basicframework.insurance.service;
 import com.soar.basicframework.base.BaseDao;
 import com.soar.basicframework.base.BaseServiceImpl;
 import com.soar.basicframework.insurance.dao.InsuranceDao;
+import com.soar.basicframework.insurance.model.InsuredPersonInformation;
 import com.soar.basicframework.insurance.model.PolicyholderInformation;
+import com.soar.basicframework.utils.GUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 投保业务服务层实现
@@ -19,7 +23,7 @@ import javax.annotation.Resource;
 public class InsuranceServiceImpl extends BaseServiceImpl<PolicyholderInformation> implements InsuranceService {
 
     @Resource
-    private InsuranceDao EmployeeDao;
+    private InsuranceDao insuranceDao;
 
     /**
      * 抽象方法，必须实现，返回DAO实例
@@ -28,6 +32,21 @@ public class InsuranceServiceImpl extends BaseServiceImpl<PolicyholderInformatio
      */
     @Override
     public BaseDao<PolicyholderInformation> getDao() {
-        return EmployeeDao;
+        return insuranceDao;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertInformation(PolicyholderInformation p, List<InsuredPersonInformation> params) {
+        p.setPId(GUID.getPrimaryKeyId());
+        p.setPCreateTime(Calendar.getInstance().getTime());
+        insuranceDao.insert(p);
+
+        for (InsuredPersonInformation i : params){
+            i.setPId(p.getPId());
+            i.setIId(GUID.getPrimaryKeyId());
+            i.setICreateTime(Calendar.getInstance().getTime());
+            insuranceDao.insertInsuredPersonInformation(i);
+        }
     }
 }

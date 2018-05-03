@@ -1,5 +1,8 @@
 package com.soar.basicframework.insurance.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -8,7 +11,11 @@ import java.util.Date;
  * @author soar
  * @date 2018/5/2
  */
-public class PolicyholderInformation {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PolicyholderInformation implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 投保人姓名.
      */

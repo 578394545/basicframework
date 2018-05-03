@@ -42,19 +42,7 @@ public class InsuranceController {
     @RequestMapping(value = "/insurance",method = RequestMethod.POST)
     public Object insurance(PolicyholderInformation p,String insuredPersonInformations) {
         //insuredPersonInformations格式
-        //[{
-        //	"IPRelation": 1,
-        //	"iName": "soar",
-        //	"iCardType": 1,
-        //	"iCard": "412154216484842",
-        //	"pId": "aduxc213"
-        //},{
-        //	"IPRelation": 1,
-        //	"iName": "soar",
-        //	"iCardType": 1,
-        //	"iCard": "412154216484842",
-        //	"pId": "aduxc213"
-        //}]
+        //[{"ipRelation": 1,"iname": "soar","icardType": 1,"icard": "412154216484842","pid": "aduxc213","ibirth":"1991-02-26"},{"ipRelation": 1,"iname": "soar","icardType": 1,"icard": "412154216484842","pid": "aduxc213","ibirth":"1991-02-26"}]
         if(StringUtil.isEmptyAny(p.getPName(),p.getPCard(),p.getPEmail(),p.getPPhone()) || null == p.getPCardType()
                 || null == p.getPIsAppend() || null == p.getPPrice() || null == p.getPItem()){
             return JsonResult.fail(GlobalResultStatus.PARAM_MISSING);
@@ -62,6 +50,13 @@ public class InsuranceController {
         if(StringUtil.isEmpty(insuredPersonInformations)){
             //被投保人为空
             return JsonResult.fail(InsuranceResultStatus.INSURED_CANNOT_BE_EMPTY);
+        }
+        List<InsuredPersonInformation> params = JsonUtil.json2List(insuredPersonInformations,InsuredPersonInformation.class);
+        for(InsuredPersonInformation i : params){
+            if(StringUtil.isEmptyAny(i.getICard(),i.getIName(),i.getPId())
+                    || null == i.getICardType() || null ==i.getIpRelation()){
+                return JsonResult.fail(GlobalResultStatus.PARAM_MISSING);
+            }
         }
         if(!StringUtil.isEmail(p.getPEmail())){
             //邮箱格式不对
@@ -79,10 +74,7 @@ public class InsuranceController {
             //默认未付款
             p.setPIsPay(0);
         }
-
-        List<InsuredPersonInformation> params = JsonUtil.json2List(insuredPersonInformations,InsuredPersonInformation.class);
-
-        insuranceService.insert(p);
+        insuranceService.insertInformation(p,params);
         return JsonResult.success();
     }
 }

@@ -22,7 +22,7 @@
     <resultMap id="insuredPersonInformation" type="com.soar.basicframework.insurance.model.InsuredPersonInformation">
         <result column="i_id" property="iId" jdbcType="VARCHAR"></result>
         <result column="p_id" property="pId" jdbcType="VARCHAR"></result>
-        <result column="i_p_relation" property="IPRelation" jdbcType="INTEGER"></result>
+        <result column="i_p_relation" property="ipRelation" jdbcType="INTEGER"></result>
         <result column="i_name" property="iName" jdbcType="VARCHAR"></result>
         <result column="i_card_type" property="iCardType" jdbcType="INTEGER"></result>
         <result column="i_card" property="iCard" jdbcType="VARCHAR"></result>
@@ -44,7 +44,8 @@
             `p_isAppend`,
             `p_insurance_date`,
             `p_price`,
-            `p_isPay`)
+            `p_isPay`
+            )
       VALUES (
           #{pId,jdbcType=VARCHAR},
           #{pName,jdbcType=VARCHAR},
@@ -58,6 +59,29 @@
           #{pInsuranceDate,jdbcType=DATE},
           #{pPrice,jdbcType=DECIMAL},
           #{pIsPay,jdbcType=INTEGER}
+          )
+    </insert>
+
+    <insert id="insertInsuredPersonInformation" parameterType="com.soar.basicframework.insurance.model.InsuredPersonInformation">
+        INSERT INTO
+          `tb_insured_person_information` (
+              i_id,
+              p_id,
+              i_p_relation,
+              i_name,
+              i_card_type,
+              i_card,
+              i_birth,
+              i_create_time
+          )
+          VALUES (
+            #{iId,jdbcType=VARCHAR},
+            #{pId,jdbcType=VARCHAR},
+            #{ipRelation,jdbcType=INTEGER},
+            #{iName,jdbcType=VARCHAR},
+            #{iCardType,jdbcType=INTEGER},
+            #{iCard,jdbcType=VARCHAR},
+            #{iBirth,jdbcType=DATE}
           )
     </insert>
 </mapper>

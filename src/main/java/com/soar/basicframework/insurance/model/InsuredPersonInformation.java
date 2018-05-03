@@ -1,5 +1,9 @@
 package com.soar.basicframework.insurance.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +11,11 @@ import java.util.Date;
  * @author Soar
  * @date 2018/5/2
  */
-public class InsuredPersonInformation {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InsuredPersonInformation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 投保人id.
      */
@@ -15,7 +23,7 @@ public class InsuredPersonInformation {
     /**
      * 与投保人关系（1-本人；2-配偶；3-子女；4-父母；5-其他）.
      */
-    private Integer IPRelation; 
+    private Integer ipRelation;
     /**
      * 被投保人姓名.
      */
@@ -63,11 +71,11 @@ public class InsuredPersonInformation {
     /**
      * 设定与投保人关系（1-本人；2-配偶；3-子女；4-父母；5-其他）. <br />
      *
-     * @param IPRelation 与投保人关系（1-本人；2-配偶；3-子女；4-父母；5-其他）
+     * @param ipRelation 与投保人关系（1-本人；2-配偶；3-子女；4-父母；5-其他）
      */
-    public void setIPRelation(Integer IPRelation) {
+    public void setIpRelation(Integer ipRelation) {
 
-        this.IPRelation = IPRelation;
+        this.ipRelation = ipRelation;
     }
 
     /**
@@ -75,9 +83,9 @@ public class InsuredPersonInformation {
      *
      * @return 与投保人关系（1-本人；2-配偶；3-子女；4-父母；5-其他）
      */
-    public Integer getIPRelation() {
+    public Integer getIpRelation() {
 
-        return IPRelation;
+        return ipRelation;
     }
 
     /**
