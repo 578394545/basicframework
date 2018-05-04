@@ -16,6 +16,7 @@
         <result column="p_insurance_date" property="pInsuranceDate" jdbcType="DATE"></result>
         <result column="p_price" property="pPrice" jdbcType="DECIMAL"></result>
         <result column="p_isPay" property="pIsPay" jdbcType="INTEGER"></result>
+        <result column="e_number" property="eNumber" jdbcType="INTEGER"></result>
     </resultMap>
 
     <!-- 被投保人信息 -->
@@ -44,7 +45,8 @@
             `p_isAppend`,
             `p_insurance_date`,
             `p_price`,
-            `p_isPay`
+            `p_isPay`,
+            `e_number`
             )
       VALUES (
           #{pId,jdbcType=VARCHAR},
@@ -58,10 +60,12 @@
           #{pIsAppend,jdbcType=INTEGER},
           #{pInsuranceDate,jdbcType=DATE},
           #{pPrice,jdbcType=DECIMAL},
-          #{pIsPay,jdbcType=INTEGER}
+          #{pIsPay,jdbcType=INTEGER},
+          #{eNumber,jdbcType=INTEGER}
           )
     </insert>
 
+    <!-- 插入被投保人信息 -->
     <insert id="insertInsuredPersonInformation" parameterType="com.soar.basicframework.insurance.model.InsuredPersonInformation">
         INSERT INTO
           `tb_insured_person_information` (
@@ -71,8 +75,7 @@
               i_name,
               i_card_type,
               i_card,
-              i_birth,
-              i_create_time
+              i_birth
           )
           VALUES (
             #{iId,jdbcType=VARCHAR},
@@ -84,4 +87,26 @@
             #{iBirth,jdbcType=DATE}
           )
     </insert>
+
+    <!-- 查询投保人信息,按创建时间倒序 -->
+    <select id = "getList" parameterType="com.soar.basicframework.insurance.model.PolicyholderInformation" resultMap="policyholderInformation">
+        SELECT p_id,e_number,p_name,p_card_type,p_card,p_phone,p_email,p_create_time,p_item,p_isAppend,p_insurance_date,p_price,p_isPay
+        FROM tb_policyholder_information
+        WHERE e_number = #{eNumber,jdbcType=INTEGER}
+        ORDER BY p_create_time DESC
+    </select>
+
+    <!-- 查询被投保人信息 -->
+    <select id = "getInsuredPersonInformation" resultMap="insuredPersonInformation">
+        SELECT i_id,p_id,i_p_relation,i_name,i_card_type,i_card,i_birth,i_create_time
+        FROM tb_insured_person_information
+        WHERE p_id = #{pId,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 修改投保人支付状态 -->
+    <update id="update" parameterType="com.soar.basicframework.insurance.model.PolicyholderInformation">
+        UPDATE tb_policyholder_information
+        SET p_isPay = 1
+        WHERE p_id = #{pId,jdbcType=VARCHAR}
+    </update>
 </mapper>

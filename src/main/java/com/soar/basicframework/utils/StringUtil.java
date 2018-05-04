@@ -662,7 +662,33 @@ public class StringUtil
             tmp.append(Integer.toHexString(Integer.parseInt(bianryString.substring(i, i + 4),2)));  
         }  
         return tmp.toString();  
-    } 
+    }
+
+    /**
+     * 校验身份证是否合法
+     * @param IDCard
+     * @return
+     */
+    public static boolean validateIDCard(String IDCard)
+    {
+        // 对身份证号进行长度等简单判断
+        if (IDCard == null || IDCard.length() != 18 || !IDCard.matches("\\d{17}[0-9X]"))
+        {
+            return false;
+        }
+        // 1-17位相乘因子数组
+        int[] factor = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };
+        // 18位随机码数组
+        char[] random = "10X98765432".toCharArray();
+        // 计算1-17位与相应因子乘积之和
+        int total = 0;
+        for (int i = 0; i < 17; i++)
+        {
+            total += Character.getNumericValue(IDCard.charAt(i)) * factor[i];
+        }
+        // 判断随机码是否相等
+        return random[total % 11] == IDCard.charAt(17);
+    }
 
     public static void main(String[] args)  
     {  

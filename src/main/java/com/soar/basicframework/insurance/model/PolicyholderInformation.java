@@ -64,7 +64,32 @@ public class PolicyholderInformation implements Serializable{
     /**
      * 是否付款(0-否；1-是).
      */
-    private Integer pIsPay; 
+    private Integer pIsPay;
+
+    /**
+     * 员工工号.
+     */
+    private Integer eNumber;
+    /**
+     * 设定员工工号. <br />
+     *
+     * @param eNumber 员工工号
+     */
+    public void setENumber(Integer eNumber) {
+
+        this.eNumber = eNumber;
+    }
+
+    /**
+     * 取得员工工号. <br />
+     *
+     * @return 员工工号
+     */
+    public Integer getENumber() {
+
+        return eNumber;
+    }
+
     /**
      * 设定是否附加一年期营运交通工具乘意险（0-否；1-是）. <br />
      *

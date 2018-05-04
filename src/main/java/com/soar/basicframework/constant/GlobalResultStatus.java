@@ -14,5 +14,6 @@ public class GlobalResultStatus {
 	public static final ResultStatus PARAM_MISSING = new ResultStatus(100010102, "缺少参数");
 	public static final ResultStatus BAD_MAILBOX_FORMAT = new ResultStatus(100010103, "邮箱格式错误！");
 	public static final ResultStatus BAD_PHONE_FORMAT = new ResultStatus(100010104, "手机号码格式错误！");
+	public static final ResultStatus USER_LOGIN_SESSION_TIME_OUT = new ResultStatus(100010105, "员工会话过期！");
 
 }

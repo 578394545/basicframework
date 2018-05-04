@@ -43,10 +43,27 @@ public class InsuranceServiceImpl extends BaseServiceImpl<PolicyholderInformatio
         insuranceDao.insert(p);
 
         for (InsuredPersonInformation i : params){
+            if(i.getIpRelation() == 1){
+                i.setICardType(p.getPCardType());
+                i.setICard(p.getPCard());
+                i.setIName(p.getPName());
+            }
+
             i.setPId(p.getPId());
             i.setIId(GUID.getPrimaryKeyId());
             i.setICreateTime(Calendar.getInstance().getTime());
             insuranceDao.insertInsuredPersonInformation(i);
         }
+    }
+
+    /**
+     * 获取被投保人信息
+     *
+     * @param pId 投保人id
+     * @return
+     */
+    @Override
+    public List<InsuredPersonInformation> getInsuredPersonInformation(String pId) {
+        return insuranceDao.getInsuredPersonInformation(pId);
     }
 }

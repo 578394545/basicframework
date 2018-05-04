@@ -26,7 +26,7 @@ public final class GUID {
 	 */
 	public static String getPrimaryKeyId(){
 		String id = UUID.randomUUID().toString().replace("-", "");
-		return id.substring(7,16);
+		return id.substring(7,15);
 	}
 
 }

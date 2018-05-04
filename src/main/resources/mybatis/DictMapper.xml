@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soar.basicframework.dict.dao.DictDao">
+    <select id="get" resultType="com.soar.basicframework.dict.model.Dict">
+        SELECT d_id as dId, d_name as dName, d_value as dValue, d_remark as dRemark
+        FROM tb_dict
+        WHERE d_name = #{dName,jdbcType=VARCHAR}
+    </select>
+</mapper>
