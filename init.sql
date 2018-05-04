@@ -15,6 +15,23 @@ CREATE DATABASE IF NOT EXISTS `jingji_insurance` /*!40100 DEFAULT CHARACTER SET 
 USE `jingji_insurance`;
 
 
+-- 导出  表 jingji_insurance.tb_dict 结构
+CREATE TABLE IF NOT EXISTS `tb_dict` (
+  `d_id` varchar(8) NOT NULL COMMENT '主键',
+  `d_name` varchar(50) NOT NULL COMMENT '字典名称',
+  `d_value` varchar(100) NOT NULL COMMENT '字典值',
+  `d_remark` varchar(200) NOT NULL COMMENT '备注',
+  PRIMARY KEY (`d_id`),
+  UNIQUE KEY `d_name` (`d_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典表';
+
+-- 正在导出表  jingji_insurance.tb_dict 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `tb_dict` DISABLE KEYS */;
+INSERT INTO `tb_dict` (`d_id`, `d_name`, `d_value`, `d_remark`) VALUES
+	('s548241f', 'insurance_date', '2018-10-01', '默认投保日期(无此项则默认为当前年10月1日)');
+/*!40000 ALTER TABLE `tb_dict` ENABLE KEYS */;
+
+
 -- 导出  表 jingji_insurance.tb_employee 结构
 CREATE TABLE IF NOT EXISTS `tb_employee` (
   `e_number` int(11) NOT NULL COMMENT '员工工号',
@@ -23,8 +40,6 @@ CREATE TABLE IF NOT EXISTS `tb_employee` (
 
 -- 正在导出表  jingji_insurance.tb_employee 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `tb_employee` DISABLE KEYS */;
-INSERT INTO `tb_employee` (`e_number`, `e_name`) VALUES
-	(123123, '张三');
 /*!40000 ALTER TABLE `tb_employee` ENABLE KEYS */;
 
 
@@ -41,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `tb_insured_person_information` (
   PRIMARY KEY (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='被保险人信息表';
 
--- 正在导出表  jingji_insurance.tb_insured_person_information 的数据：~0 rows (大约)
+-- 正在导出表  jingji_insurance.tb_insured_person_information 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `tb_insured_person_information` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_insured_person_information` ENABLE KEYS */;
 
@@ -49,10 +64,11 @@ CREATE TABLE IF NOT EXISTS `tb_insured_person_information` (
 -- 导出  表 jingji_insurance.tb_policyholder_information 结构
 CREATE TABLE IF NOT EXISTS `tb_policyholder_information` (
   `p_id` varchar(8) NOT NULL COMMENT '主键',
+  `e_number` varchar(100) NOT NULL COMMENT '投保人工号',
   `p_name` varchar(100) NOT NULL COMMENT '投保人姓名',
   `p_card_type` int(11) NOT NULL DEFAULT '1' COMMENT '投保人证件类型（1-身份证；2-护照；3-户口簿；4-军人证件；5-来往港澳通行证；6-大陆居民往来台湾通行证；7-港澳居民来往内地通行证；8-台湾居民来往内地通行证；9-港澳居民身份证）',
   `p_card` varchar(50) NOT NULL COMMENT '投保人证件号码',
-  `p_phone` int(11) NOT NULL COMMENT '投保人手机号码',
+  `p_phone` varchar(11) NOT NULL COMMENT '投保人手机号码',
   `p_email` varchar(100) NOT NULL COMMENT '投保人电子邮箱',
   `p_create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `p_item` int(1) NOT NULL DEFAULT '1' COMMENT '投保项目（1-经济版；2-豪华版；3-尊贵版）',
@@ -63,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `tb_policyholder_information` (
   PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投保人信息表';
 
--- 正在导出表  jingji_insurance.tb_policyholder_information 的数据：~0 rows (大约)
+-- 正在导出表  jingji_insurance.tb_policyholder_information 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `tb_policyholder_information` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_policyholder_information` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
