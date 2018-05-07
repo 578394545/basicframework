@@ -6,6 +6,10 @@ package com.soar.basicframework.dict.model;
  * @date 2018/5/4
  */
 public class Dict {
+    public Dict(){}
+    public Dict (Integer dType){
+        this.setDType(dType);
+    }
     /**
      * 字典名.
      */
@@ -17,11 +21,60 @@ public class Dict {
     /**
      * 主键.
      */
-    private String dId; 
+    private Integer dId;
     /**
      * 备注.
      */
-    private String dRemark; 
+    private String dRemark;
+
+    /**
+     * 类别（1001-默认日期；1002-证件类型；1003-与投保人关系；1004-投保方案）.
+     */
+    private Integer dType;
+    /**
+     * 序号.
+     */
+    private Integer dNo;
+    /**
+     * 设定类别（1001-默认日期；1002-证件类型；1003-与投保人关系）. <br />
+     *
+     * @param dType 类别（1001-默认日期；1002-证件类型；1003-与投保人关系）
+     */
+    public void setDType(Integer dType) {
+
+        this.dType = dType;
+    }
+
+    /**
+     * 取得类别（1001-默认日期；1002-证件类型；1003-与投保人关系）. <br />
+     *
+     * @return 类别（1001-默认日期；1002-证件类型；1003-与投保人关系）
+     */
+    public Integer getDType() {
+
+        return dType;
+    }
+
+    /**
+     * 设定序号. <br />
+     *
+     * @param dNo 序号
+     */
+    public void setDNo(Integer dNo) {
+
+        this.dNo = dNo;
+    }
+
+    /**
+     * 取得序号. <br />
+     *
+     * @return 序号
+     */
+    public Integer getDNo() {
+
+        return dNo;
+    }
+
     /**
      * 设定字典名. <br />
      *
@@ -67,7 +120,7 @@ public class Dict {
      *
      * @param dId 主键
      */
-    public void setDId(String dId) {
+    public void setDId(Integer dId) {
 
         this.dId = dId;
     }
@@ -77,7 +130,7 @@ public class Dict {
      *
      * @return 主键
      */
-    public String getDId() {
+    public Integer getDId() {
 
         return dId;
     }

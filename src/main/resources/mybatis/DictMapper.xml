@@ -2,9 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.soar.basicframework.dict.dao.DictDao">
-    <select id="get" resultType="com.soar.basicframework.dict.model.Dict">
-        SELECT d_id as dId, d_name as dName, d_value as dValue, d_remark as dRemark
+    <resultMap id="dictMap" type="com.soar.basicframework.dict.model.Dict">
+        <result column="d_id" property="dId" jdbcType="INTEGER"></result>
+        <result column="d_name" property="dName" jdbcType="VARCHAR"></result>
+        <result column="d_value" property="dValue" jdbcType="VARCHAR"></result>
+        <result column="d_remark" property="dRemark" jdbcType="VARCHAR"></result>
+        <result column="d_type" property="dType" jdbcType="INTEGER"></result>
+        <result column="d_no" property="dNo" jdbcType="INTEGER"></result>
+    </resultMap>
+    <!-- 根据name取值，仅用于获取默认时间 -->
+    <select id="get" resultMap="dictMap">
+        SELECT d_id, d_name, d_value, d_remark, d_type, d_no
         FROM tb_dict
         WHERE d_name = #{dName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getList" resultMap="dictMap" parameterType="com.soar.basicframework.dict.model.Dict">
+        SELECT d_id,d_name, d_value, d_remark, d_type, d_no
+        FROM tb_dict
+        WHERE d_type = #{dType,jdbcType=INTEGER}
+        <if test="dNo != null">
+            AND d_no = #{dNo,jdbcType=INTEGER}
+        </if>
+        <if test="dName != null">
+            AND d_name = #{dName,jdbcType=VARCHAR}
+        </if>
     </select>
 </mapper>
