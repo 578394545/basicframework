@@ -17,18 +17,35 @@ USE `jingji_insurance`;
 
 -- 导出  表 jingji_insurance.tb_dict 结构
 CREATE TABLE IF NOT EXISTS `tb_dict` (
-  `d_id` varchar(8) NOT NULL COMMENT '主键',
+  `d_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `d_name` varchar(50) NOT NULL COMMENT '字典名称',
-  `d_value` varchar(100) NOT NULL COMMENT '字典值',
-  `d_remark` varchar(200) NOT NULL COMMENT '备注',
+  `d_type` int(4) NOT NULL COMMENT '类别（1001-默认日期；1002-证件类型；1003-与投保人关系）',
+  `d_no` int(11) NOT NULL DEFAULT '1' COMMENT '序号',
+  `d_value` varchar(2000) NOT NULL COMMENT '字典值',
+  `d_remark` varchar(200) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`d_id`),
-  UNIQUE KEY `d_name` (`d_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典表';
+  UNIQUE KEY `d_name_d_type` (`d_name`,`d_type`,`d_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='字典表';
 
--- 正在导出表  jingji_insurance.tb_dict 的数据：~1 rows (大约)
+-- 正在导出表  jingji_insurance.tb_dict 的数据：~15 rows (大约)
+DELETE FROM `tb_dict`;
 /*!40000 ALTER TABLE `tb_dict` DISABLE KEYS */;
-INSERT INTO `tb_dict` (`d_id`, `d_name`, `d_value`, `d_remark`) VALUES
-	('s548241f', 'insurance_date', '2018-10-01', '默认投保日期(无此项则默认为当前年10月1日)');
+INSERT INTO `tb_dict` (`d_id`, `d_name`, `d_type`, `d_no`, `d_value`, `d_remark`) VALUES
+	(1, 'insurance_date', 1001, 1, '2018-10-01', '默认投保日期(无此项则默认为当前年10月1日)'),
+	(2, 'relationship', 1003, 1, '本人', '投保人与被投保人关系'),
+	(3, 'relationship', 1003, 2, '配偶', '投保人与被投保人关系'),
+	(4, 'relationship', 1003, 3, '子女', '投保人与被投保人关系'),
+	(5, 'relationship', 1003, 4, '父母', '投保人与被投保人关系'),
+	(6, 'relationship', 1003, 5, '其他', '投保人与被投保人关系'),
+	(11, 'card_type', 1002, 1, '身份证', '证件类型'),
+	(12, 'card_type', 1002, 2, '护照', '证件类型'),
+	(13, 'card_type', 1002, 3, '户口簿', '证件类型'),
+	(14, 'card_type', 1002, 4, '军人证件', '证件类型'),
+	(16, 'card_type', 1002, 5, '来往港澳通行证', '证件类型'),
+	(17, 'card_type', 1002, 6, '大陆居民往来台湾通行证', '证件类型'),
+	(18, 'card_type', 1002, 7, '港澳居民来往内地通行证', '证件类型'),
+	(19, 'card_type', 1002, 8, '台湾居民来往内地通行证', '证件类型'),
+	(20, 'card_type', 1002, 9, '港澳居民身份证', '证件类型');
 /*!40000 ALTER TABLE `tb_dict` ENABLE KEYS */;
 
 
@@ -38,9 +55,24 @@ CREATE TABLE IF NOT EXISTS `tb_employee` (
   `e_name` varchar(50) NOT NULL COMMENT '员工姓名'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工信息表';
 
--- 正在导出表  jingji_insurance.tb_employee 的数据：~1 rows (大约)
+-- 正在导出表  jingji_insurance.tb_employee 的数据：~0 rows (大约)
+DELETE FROM `tb_employee`;
 /*!40000 ALTER TABLE `tb_employee` DISABLE KEYS */;
+INSERT INTO `tb_employee` (`e_number`, `e_name`) VALUES
+	(123456, 'soar');
 /*!40000 ALTER TABLE `tb_employee` ENABLE KEYS */;
+
+
+-- 导出  表 jingji_insurance.tb_insurance_plan 结构
+CREATE TABLE IF NOT EXISTS `tb_insurance_plan` (
+  `ip_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  PRIMARY KEY (`ip_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投保方案表';
+
+-- 正在导出表  jingji_insurance.tb_insurance_plan 的数据：~0 rows (大约)
+DELETE FROM `tb_insurance_plan`;
+/*!40000 ALTER TABLE `tb_insurance_plan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_insurance_plan` ENABLE KEYS */;
 
 
 -- 导出  表 jingji_insurance.tb_insured_person_information 结构
@@ -56,7 +88,8 @@ CREATE TABLE IF NOT EXISTS `tb_insured_person_information` (
   PRIMARY KEY (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='被保险人信息表';
 
--- 正在导出表  jingji_insurance.tb_insured_person_information 的数据：~2 rows (大约)
+-- 正在导出表  jingji_insurance.tb_insured_person_information 的数据：~0 rows (大约)
+DELETE FROM `tb_insured_person_information`;
 /*!40000 ALTER TABLE `tb_insured_person_information` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_insured_person_information` ENABLE KEYS */;
 
@@ -79,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `tb_policyholder_information` (
   PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投保人信息表';
 
--- 正在导出表  jingji_insurance.tb_policyholder_information 的数据：~1 rows (大约)
+-- 正在导出表  jingji_insurance.tb_policyholder_information 的数据：~0 rows (大约)
+DELETE FROM `tb_policyholder_information`;
 /*!40000 ALTER TABLE `tb_policyholder_information` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_policyholder_information` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
