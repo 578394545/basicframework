@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soar.basicframework.insurance.dao.SchemeDao">
+    <resultMap id="schemeMap" type="com.soar.basicframework.insurance.model.Scheme">
+        <result column="s_id" property="sId" jdbcType="INTEGER"></result>
+        <result column="s_name" property="sName" jdbcType="VARCHAR"></result>
+        <result column="s_premium" property="sPremium" jdbcType="VARCHAR"></result>
+        <result column="s_remark" property="sRemark" jdbcType="VARCHAR"></result>
+        <result column="s_create_time" property="sCreateTime" jdbcType="TIMESTAMP"></result>
+    </resultMap>
+    <select id="get" resultMap="schemeMap">
+        SELECT s_id,s_name,s_premium,s_remark,s_create_time
+        FROM tb_scheme
+        WHERE s_id = #{sId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getList" resultMap="schemeMap" parameterType="com.soar.basicframework.insurance.model.Scheme">
+        SELECT s_id,s_name,s_premium,s_remark,s_create_time
+        FROM tb_scheme
+    </select>
+</mapper>
