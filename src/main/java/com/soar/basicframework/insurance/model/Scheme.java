@@ -2,6 +2,7 @@ package com.soar.basicframework.insurance.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 投保方案实体类
@@ -31,7 +32,31 @@ public class Scheme implements Serializable{
     /**
      * 创建时间.
      */
-    private Date sCreateTime; 
+    private Date sCreateTime;
+
+    /**
+     * 方案详情列表.
+     */
+    private List<SchemeDetail> schemeDetail;
+
+
+    /**
+     * 取得方案详情列表. <br />
+     *
+     * @return 方案详情列表
+     */
+    public List<SchemeDetail> getSchemeDetail() {
+        return schemeDetail;
+    }
+    /**
+     * 设定方案详情. <br />
+     *
+     * @param schemeDetail 方案详情列表
+     */
+    public void setSchemeDetail(List<SchemeDetail> schemeDetail) {
+        this.schemeDetail = schemeDetail;
+    }
+
     /**
      * 设定方案名称. <br />
      *

@@ -8,7 +8,24 @@
         <result column="s_premium" property="sPremium" jdbcType="VARCHAR"></result>
         <result column="s_remark" property="sRemark" jdbcType="VARCHAR"></result>
         <result column="s_create_time" property="sCreateTime" jdbcType="TIMESTAMP"></result>
+        <association property="schemeDetail" column="s_id" select="getDetail"></association>
     </resultMap>
+
+    <resultMap id="schemeDetailMap" type="com.soar.basicframework.insurance.model.SchemeDetail">
+        <result column="sd_id" property="sdId" jdbcType="INTEGER"></result>
+        <result column="s_id" property="sId" jdbcType="INTEGER"></result>
+        <result column="d_id" property="dId" jdbcType="INTEGER"></result>
+        <result column="sd_content" property="sdContent" jdbcType="VARCHAR"></result>
+        <result column="sd_create_time" property="sdCreateTime" jdbcType="TIMESTAMP"></result>
+        <result column="d_value" property="dValue" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="getDetail" resultMap="schemeDetailMap">
+        SELECT sd.sd_id,sd.s_id,sd.d_id,sd.sd_content,sd.sd_create_time,d.d_value
+        FROM tb_scheme_detail AS sd
+        INNER JOIN tb_dict AS d ON d.d_id = sd.d_id
+        WHERE s_id = #{sId,jdbcType=INTEGER}
+    </select>
     <select id="get" resultMap="schemeMap">
         SELECT s_id,s_name,s_premium,s_remark,s_create_time
         FROM tb_scheme

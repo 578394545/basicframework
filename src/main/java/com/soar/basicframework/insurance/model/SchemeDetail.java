@@ -31,7 +31,29 @@ public class SchemeDetail implements Serializable {
     /**
      * 创建时间.
      */
-    private Date sdCreateTime; 
+    private Date sdCreateTime;
+
+    private String dValue; //保险项目名称.
+    /**
+     * 设定保险项目名称. <br />
+     *
+     * @param dValue 保险项目名称
+     */
+    public void setDValue(String dValue) {
+
+        this.dValue = dValue;
+    }
+
+    /**
+     * 取得保险项目名称. <br />
+     *
+     * @return 保险项目名称
+     */
+    public String getDValue() {
+
+        return dValue;
+    }
+
     /**
      * 设定方案id. <br />
      *

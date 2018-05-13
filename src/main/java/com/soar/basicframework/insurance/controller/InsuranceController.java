@@ -6,7 +6,9 @@ import com.soar.basicframework.constant.InsuranceResultStatus;
 import com.soar.basicframework.employee.model.Employee;
 import com.soar.basicframework.insurance.model.InsuredPersonInformation;
 import com.soar.basicframework.insurance.model.PolicyholderInformation;
+import com.soar.basicframework.insurance.model.Scheme;
 import com.soar.basicframework.insurance.service.InsuranceService;
+import com.soar.basicframework.insurance.service.SchemeService;
 import com.soar.basicframework.json.JsonResult;
 import com.soar.basicframework.utils.DateUtil;
 import com.soar.basicframework.utils.JsonUtil;
@@ -34,6 +36,9 @@ public class InsuranceController {
 
     @Resource
     private InsuranceService insuranceService;
+
+    @Resource
+    private SchemeService schemeService;
 
     /**
      * 检查员工输入的信息是否正确
@@ -165,5 +170,22 @@ public class InsuranceController {
         }
 
         return JsonResult.fail(GlobalResultStatus.ERROR);
+    }
+
+    /**
+     * 获取方案信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getScheme")
+    public Object getScheme(HttpServletRequest request){
+        Employee employee = (Employee) request.getSession().getAttribute(EmployeeResultStatus.CURRENT_EMPLOYEE);
+        if(null == employee){
+            return JsonResult.fail(GlobalResultStatus.USER_LOGIN_SESSION_TIME_OUT);
+        }
+
+        List<Scheme> list = schemeService.getList(new Scheme());
+
+        return JsonResult.success(list);
     }
 }

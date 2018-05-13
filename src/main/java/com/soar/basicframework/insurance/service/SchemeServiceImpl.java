@@ -36,4 +36,5 @@ public class SchemeServiceImpl extends BaseServiceImpl<Scheme> implements Scheme
     public BaseDao<Scheme> getDao() {
         return schemeDao;
     }
+
 }
