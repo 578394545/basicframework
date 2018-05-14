@@ -2,17 +2,15 @@ package com.soar.basicframework.insurance.service;
 
 import com.soar.basicframework.base.BaseDao;
 import com.soar.basicframework.base.BaseServiceImpl;
-import com.soar.basicframework.insurance.dao.InsuranceDao;
 import com.soar.basicframework.insurance.dao.SchemeDao;
-import com.soar.basicframework.insurance.model.InsuredPersonInformation;
-import com.soar.basicframework.insurance.model.PolicyholderInformation;
 import com.soar.basicframework.insurance.model.Scheme;
-import com.soar.basicframework.utils.GUID;
+import com.soar.basicframework.insurance.model.SchemeVo;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,4 +35,23 @@ public class SchemeServiceImpl extends BaseServiceImpl<Scheme> implements Scheme
         return schemeDao;
     }
 
+    /**
+     * 获取方案内容
+     *
+     * @return
+     */
+    @Override
+    public List<SchemeVo> getScheme() {
+        List<Scheme> list = schemeDao.getList(new Scheme());
+        for(Scheme scheme : list){
+            String premium = scheme.getSPremium();
+            JSONObject jsonObject = new JSONObject(premium);
+            Iterator<String> it = jsonObject.keySet().iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                System.out.println(key+"="+jsonObject.get(key));
+            }
+        }
+        return null;
+    }
 }
