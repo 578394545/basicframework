@@ -3,10 +3,8 @@ package com.soar.basicframework.insurance.service;
 import com.soar.basicframework.base.BaseDao;
 import com.soar.basicframework.base.BaseServiceImpl;
 import com.soar.basicframework.insurance.dao.SchemeDao;
-import com.soar.basicframework.insurance.model.Scheme;
-import com.soar.basicframework.insurance.model.SchemeDetail;
-import com.soar.basicframework.insurance.model.SchemePrice;
-import com.soar.basicframework.insurance.model.SchemeVo;
+import com.soar.basicframework.insurance.model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,9 +54,19 @@ public class SchemeServiceImpl extends BaseServiceImpl<Scheme> implements Scheme
                 String dValue = schemeDetail.getDValue();
 
                 String content = schemeDetail.getSdContent();
-                JSONObject contentJson = new JSONObject(content);
-                Iterator<String> it = contentJson.keySet().iterator();
-                while (it.hasNext()) {
+//
+                JSONArray jsonArray = new JSONArray(content);
+                int length = jsonArray.length();
+                for(int i = 0; i < length ; i++){
+                    JSONObject contentJson = new JSONObject(jsonArray.get(i));
+                    Iterator<String> it = contentJson.keySet().iterator();
+                    while (it.hasNext()) {
+                        SchemeDetailContent schemeDetailContent = new SchemeDetailContent();
+                        //年龄
+                        String age = it.next();
+                        schemeDetailContent.setAge(age);
+
+                    }
 
                 }
             }
