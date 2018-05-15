@@ -4,6 +4,8 @@ import com.soar.basicframework.base.BaseDao;
 import com.soar.basicframework.base.BaseServiceImpl;
 import com.soar.basicframework.insurance.dao.SchemeDao;
 import com.soar.basicframework.insurance.model.Scheme;
+import com.soar.basicframework.insurance.model.SchemeDetail;
+import com.soar.basicframework.insurance.model.SchemePrice;
 import com.soar.basicframework.insurance.model.SchemeVo;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -42,16 +45,55 @@ public class SchemeServiceImpl extends BaseServiceImpl<Scheme> implements Scheme
      */
     @Override
     public List<SchemeVo> getScheme() {
+        List<SchemeVo> schemeVos = new LinkedList<>();
         List<Scheme> list = schemeDao.getList(new Scheme());
         for(Scheme scheme : list){
-            String premium = scheme.getSPremium();
-            JSONObject jsonObject = new JSONObject(premium);
-            Iterator<String> it = jsonObject.keySet().iterator();
-            while (it.hasNext()) {
-                String key = it.next();
-                System.out.println(key+"="+jsonObject.get(key));
+            //获取价格信息
+            schemeVos = getPrice(scheme,schemeVos);
+
+            List<SchemeDetail> schemeDetails = scheme.getSchemeDetail();
+            for(SchemeDetail schemeDetail : schemeDetails){
+                String dValue = schemeDetail.getDValue();
+
+                String content = schemeDetail.getSdContent();
+                JSONObject contentJson = new JSONObject(content);
+                Iterator<String> it = contentJson.keySet().iterator();
+                while (it.hasNext()) {
+
+                }
             }
         }
-        return null;
+
+        return schemeVos;
+    }
+
+    private List<SchemeVo> getPrice(Scheme scheme,List<SchemeVo> schemeVos) {
+        SchemeVo schemeVo = new SchemeVo();
+        schemeVo.setSId(scheme.getSId());
+        schemeVo.setSName(scheme.getSName());
+
+        //投保金额json
+        String premium = scheme.getSPremium();
+        JSONObject premiumJson = new JSONObject(premium);
+        //投保个数限制json
+        String limitNumber = scheme.getSRemark();
+        JSONObject limitJson = new JSONObject(limitNumber);
+
+        Iterator<String> it = premiumJson.keySet().iterator();
+        List<SchemePrice> schemePrices = new LinkedList<>();
+        while (it.hasNext()) {
+            SchemePrice schemePrice = new SchemePrice();
+            //投保年龄
+            String age = it.next();
+            schemePrice.setAge(age);
+            //金额
+            schemePrice.setPrice((String) premiumJson.get(age));
+            //个数限制
+            schemePrice.setLimit((Integer) limitJson.get(age));
+            schemePrices.add(schemePrice);
+        }
+        schemeVo.setSchemePrices(schemePrices);
+        schemeVos.add(schemeVo);
+        return schemeVos;
     }
 }
