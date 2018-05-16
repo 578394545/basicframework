@@ -42,66 +42,77 @@ public class SchemeServiceImpl extends BaseServiceImpl<Scheme> implements Scheme
      * @return
      */
     @Override
-    public List<SchemeVo> getScheme() {
-        List<SchemeVo> schemeVos = new LinkedList<>();
+    public List<SchemeVO> getScheme() {
+        List<SchemeVO> schemeVos = new LinkedList<>();
+
         List<Scheme> list = schemeDao.getList(new Scheme());
         for(Scheme scheme : list){
-            //获取价格信息
-            schemeVos = getPrice(scheme,schemeVos);
+
+            SchemeVO schemeVo = new SchemeVO();
+            schemeVo.setSId(scheme.getSId());
+            schemeVo.setSName(scheme.getSName());
+
+            //投保金额json
+            String premium = scheme.getSPremium();
+            JSONObject premiumJson = new JSONObject(premium);
+            //投保个数限制json
+            String limitNumber = scheme.getSRemark();
+            JSONObject limitJson = new JSONObject(limitNumber);
+
+            Iterator<String> it = premiumJson.keySet().iterator();
+            List<SchemePriceVO> schemePrices = new LinkedList<>();
+            while (it.hasNext()) {
+                SchemePriceVO schemePrice = new SchemePriceVO();
+                //投保年龄
+                String age = it.next();
+                schemePrice.setAge(age);
+                //金额
+                schemePrice.setPrice((String) premiumJson.get(age));
+                //个数限制
+                schemePrice.setLimit((Integer) limitJson.get(age));
+                schemePrices.add(schemePrice);
+            }
+            schemeVo.setSchemePrices(schemePrices);
 
             List<SchemeDetail> schemeDetails = scheme.getSchemeDetail();
+            List<SchemeDetailVO> schemeDetailVOS = new LinkedList<>();
             for(SchemeDetail schemeDetail : schemeDetails){
-                String dValue = schemeDetail.getDValue();
+                SchemeDetailVO schemeDetailVO = new SchemeDetailVO();
+                schemeDetailVO.setDValue(schemeDetail.getDValue());
 
                 String content = schemeDetail.getSdContent();
+                String remark = schemeDetail.getSdRemark();
 //
-                JSONArray jsonArray = new JSONArray(content);
-                int length = jsonArray.length();
+                JSONArray contentJsonArray = new JSONArray(content);
+                JSONArray remarkJsonArray = new JSONArray(remark);
+                int length = contentJsonArray.length();
+                List<SchemeDetailContent> schemeDetailContents = new LinkedList<>();
                 for(int i = 0; i < length ; i++){
-                    JSONObject contentJson = new JSONObject(jsonArray.get(i));
-                    Iterator<String> it = contentJson.keySet().iterator();
-                    while (it.hasNext()) {
+                    JSONObject contentJson = new JSONObject(contentJsonArray.get(i).toString());
+                    JSONObject remarkJson = new JSONObject(remarkJsonArray.get(i).toString());
+                    Iterator<String> it2 = contentJson.keySet().iterator();
+                    while (it2.hasNext()) {
                         SchemeDetailContent schemeDetailContent = new SchemeDetailContent();
                         //年龄
-                        String age = it.next();
+                        String age = it2.next();
                         schemeDetailContent.setAge(age);
+                        schemeDetailContent.setPremium((String) contentJson.get(age));
+                        schemeDetailContent.setRemark((String) remarkJson.get(age));
 
+                        schemeDetailContents.add(schemeDetailContent);
                     }
-
+                    schemeDetailVO.setContentList(schemeDetailContents);
                 }
+                schemeDetailVOS.add(schemeDetailVO);
+                schemeVo.setSchemeDetailVOs(schemeDetailVOS);
             }
+            schemeVos.add(schemeVo);
         }
-
         return schemeVos;
     }
 
-    private List<SchemeVo> getPrice(Scheme scheme,List<SchemeVo> schemeVos) {
-        SchemeVo schemeVo = new SchemeVo();
-        schemeVo.setSId(scheme.getSId());
-        schemeVo.setSName(scheme.getSName());
+    private List<SchemeVO> getPrice(Scheme scheme, List<SchemeVO> schemeVos) {
 
-        //投保金额json
-        String premium = scheme.getSPremium();
-        JSONObject premiumJson = new JSONObject(premium);
-        //投保个数限制json
-        String limitNumber = scheme.getSRemark();
-        JSONObject limitJson = new JSONObject(limitNumber);
-
-        Iterator<String> it = premiumJson.keySet().iterator();
-        List<SchemePrice> schemePrices = new LinkedList<>();
-        while (it.hasNext()) {
-            SchemePrice schemePrice = new SchemePrice();
-            //投保年龄
-            String age = it.next();
-            schemePrice.setAge(age);
-            //金额
-            schemePrice.setPrice((String) premiumJson.get(age));
-            //个数限制
-            schemePrice.setLimit((Integer) limitJson.get(age));
-            schemePrices.add(schemePrice);
-        }
-        schemeVo.setSchemePrices(schemePrices);
-        schemeVos.add(schemeVo);
         return schemeVos;
     }
 }

@@ -6,8 +6,7 @@ import com.soar.basicframework.constant.InsuranceResultStatus;
 import com.soar.basicframework.employee.model.Employee;
 import com.soar.basicframework.insurance.model.InsuredPersonInformation;
 import com.soar.basicframework.insurance.model.PolicyholderInformation;
-import com.soar.basicframework.insurance.model.Scheme;
-import com.soar.basicframework.insurance.model.SchemeVo;
+import com.soar.basicframework.insurance.model.SchemeVO;
 import com.soar.basicframework.insurance.service.InsuranceService;
 import com.soar.basicframework.insurance.service.SchemeService;
 import com.soar.basicframework.json.JsonResult;
@@ -185,7 +184,7 @@ public class InsuranceController {
             return JsonResult.fail(GlobalResultStatus.USER_LOGIN_SESSION_TIME_OUT);
         }
 
-        List<SchemeVo> list = schemeService.getScheme();
+        List<SchemeVO> list = schemeService.getScheme();
 
         return JsonResult.success(list);
     }

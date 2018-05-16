@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author Soar
  * @date 2018/5/10
  */
-public class SchemePrice implements Serializable{
+public class SchemePriceVO implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

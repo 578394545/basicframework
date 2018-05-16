@@ -42,14 +42,14 @@ public class Scheme implements Serializable{
     /**
      * 方案价格及购买限制
      */
-    private List<SchemePrice> schemePrices;
+    private List<SchemePriceVO> schemePrices;
 
     /**
      * 获取方案价格及购买限制. <br />
      *
      * @return 方案价格及购买限制列表
      */
-    public List<SchemePrice> getSchemePrices() {
+    public List<SchemePriceVO> getSchemePrices() {
         return schemePrices;
     }
 
@@ -58,7 +58,7 @@ public class Scheme implements Serializable{
      *
      * @param schemePrices 方案价格及购买限制列表
      */
-    public void setSchemePrices(List<SchemePrice> schemePrices) {
+    public void setSchemePrices(List<SchemePriceVO> schemePrices) {
         this.schemePrices = schemePrices;
     }
 

@@ -2,7 +2,7 @@ package com.soar.basicframework.insurance.service;
 
 import com.soar.basicframework.base.BaseService;
 import com.soar.basicframework.insurance.model.Scheme;
-import com.soar.basicframework.insurance.model.SchemeVo;
+import com.soar.basicframework.insurance.model.SchemeVO;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface SchemeService extends BaseService<Scheme> {
      * 获取方案内容
      * @return
      */
-    List<SchemeVo> getScheme();
+    List<SchemeVO> getScheme();
 }
