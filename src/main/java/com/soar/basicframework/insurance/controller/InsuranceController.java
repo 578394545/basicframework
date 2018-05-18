@@ -3,6 +3,8 @@ package com.soar.basicframework.insurance.controller;
 import com.soar.basicframework.constant.EmployeeResultStatus;
 import com.soar.basicframework.constant.GlobalResultStatus;
 import com.soar.basicframework.constant.InsuranceResultStatus;
+import com.soar.basicframework.dict.model.Dict;
+import com.soar.basicframework.dict.service.DictService;
 import com.soar.basicframework.employee.model.Employee;
 import com.soar.basicframework.insurance.model.InsuredPersonInformation;
 import com.soar.basicframework.insurance.model.PolicyholderInformation;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -40,13 +44,16 @@ public class InsuranceController {
     @Resource
     private SchemeService schemeService;
 
+    @Resource
+    private DictService dictService;
+
     /**
      * 检查员工输入的信息是否正确
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/insurance",method = RequestMethod.POST)
-    public Object insurance(PolicyholderInformation p,String insuredPersonInformations,HttpServletRequest request) {
+    public Object insurance(PolicyholderInformation p,String insuredPersonInformations,HttpServletRequest request,String pInsuranceString) {
         //insuredPersonInformations格式
         //[{"ipRelation": 1,"iname": "soar","icardType": 1,"icard": "412154216484842","pid": "aduxc213","ibirth":"1991-02-26"},{"ipRelation": 1,"iname": "soar","icardType": 1,"icard": "412154216484842","pid": "aduxc213","ibirth":"1991-02-26"}]
 
@@ -89,11 +96,18 @@ public class InsuranceController {
             //手机号格式不对
             return JsonResult.fail(GlobalResultStatus.BAD_PHONE_FORMAT);
         }
-        if(null == p.getPInsuranceDate()){
+        if(null == pInsuranceString){
             //默认当前年份的10月1日
             Calendar calendar = Calendar.getInstance();
             calendar.set((DateUtil.getYear(new Date())),9,1);
             p.setPInsuranceDate(calendar.getTime());
+        }else{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                p.setPInsuranceDate(format.parse(pInsuranceString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         if(null == p.getPIsPay()){
             //默认未付款
@@ -146,7 +160,7 @@ public class InsuranceController {
             Map<String, Object> pMap = new HashMap<>(16);
             pMap.put("pitem",policyholderInformation.getPItem());
             pMap.put("pisAppend",policyholderInformation.getPIsAppend());
-            pMap.put("pinsuranceDate",policyholderInformation.getPInsuranceDate());
+            pMap.put("pinsuranceString",policyholderInformation.getPInsuranceDate());
             resultMap.put("policyholderInformation",pMap);
 
             //修改投保人支付状态
@@ -185,7 +199,14 @@ public class InsuranceController {
         }
 
         List<SchemeVO> list = schemeService.getScheme();
+        Dict dict = dictService.get(EmployeeResultStatus.INSURANCE_DATE);
+        String pInsuranceString = dict.getDValue();
 
-        return JsonResult.success(list);
+        Map<String, Object> result = new HashMap<>(16);
+        result.put("scheme",list);
+        result.put("pInsuranceString",pInsuranceString);
+        result.put("timeLimit",1);
+
+        return JsonResult.success(result);
     }
 }
