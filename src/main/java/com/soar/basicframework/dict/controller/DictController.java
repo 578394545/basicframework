@@ -7,6 +7,7 @@ import com.soar.basicframework.dict.model.Dict;
 import com.soar.basicframework.dict.model.DictVO;
 import com.soar.basicframework.dict.service.DictService;
 import com.soar.basicframework.employee.model.Employee;
+import com.soar.basicframework.insurance.model.TrafficVO;
 import com.soar.basicframework.json.JsonResult;
 import com.soar.basicframework.utils.SessionUtil;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -82,5 +83,38 @@ public class DictController {
             return result;
         }
         return null;
+    }
+
+    /**
+     * 获取交通保险信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getTraffic")
+    public Object getTraffic(HttpServletRequest request){
+        Employee employee = (Employee) request.getSession().getAttribute(EmployeeResultStatus.CURRENT_EMPLOYEE);
+        if(null == employee){
+            return JsonResult.fail(GlobalResultStatus.USER_LOGIN_SESSION_TIME_OUT);
+        }
+
+        List<Dict> list = dictService.getList(new Dict(DictConstants.TRAFFIC));
+        TrafficVO result = new TrafficVO();
+        for (Dict dict : list){
+            switch (dict.getDNo()){
+                case 1 :
+                    result.setItem(dict.getDValue());
+                    continue;
+                case 2 :
+                    result.setQuota(dict.getDValue());
+                    continue;
+                case 3 :
+                    result.setPremium(dict.getDValue());
+                    continue;
+                case 4 :
+                    result.setRemark(dict.getDRemark());
+                    continue;
+            }
+        }
+        return JsonResult.success(result);
     }
 }

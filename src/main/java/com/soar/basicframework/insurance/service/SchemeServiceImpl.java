@@ -111,8 +111,4 @@ public class SchemeServiceImpl extends BaseServiceImpl<Scheme> implements Scheme
         return schemeVos;
     }
 
-    private List<SchemeVO> getPrice(Scheme scheme, List<SchemeVO> schemeVos) {
-
-        return schemeVos;
-    }
 }

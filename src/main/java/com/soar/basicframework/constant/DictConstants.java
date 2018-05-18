@@ -19,5 +19,10 @@ public class DictConstants {
 	 */
 	public static final Integer RELATIONSHIP = 1003;
 
+	/**
+	 * 交通意外险信息代码常量
+	 */
+	public static final Integer TRAFFIC = 1005;
+
 
 }
