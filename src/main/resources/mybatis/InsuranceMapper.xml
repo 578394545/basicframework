@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.soar.basicframework.insurance.dao.InsuranceDao">
+<mapper namespace="com.jingji.insurance.insurance.dao.InsuranceDao">
     <!-- 投保人result -->
-    <resultMap id="policyholderInformation" type="com.soar.basicframework.insurance.model.PolicyholderInformation">
+    <resultMap id="policyholderInformation" type="com.jingji.insurance.insurance.model.PolicyholderInformation">
         <result column="p_id" property="pId" jdbcType="VARCHAR"></result>
         <result column="p_name" property="pName" jdbcType="VARCHAR"></result>
         <result column="p_card_type" property="pCardType" jdbcType="INTEGER"></result>
@@ -16,11 +16,14 @@
         <result column="p_insurance_date" property="pInsuranceDate" jdbcType="DATE"></result>
         <result column="p_price" property="pPrice" jdbcType="DECIMAL"></result>
         <result column="p_isPay" property="pIsPay" jdbcType="INTEGER"></result>
-        <result column="e_number" property="eNumber" jdbcType="INTEGER"></result>
+        <result column="e_number" property="eNumber" jdbcType="VARCHAR"></result>
+
+        <result column="s_name" property="sName" jdbcType="VARCHAR"></result>
+        <result column="d_value" property="dValue" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <!-- 被投保人信息 -->
-    <resultMap id="insuredPersonInformation" type="com.soar.basicframework.insurance.model.InsuredPersonInformation">
+    <resultMap id="insuredPersonInformation" type="com.jingji.insurance.insurance.model.InsuredPersonInformation">
         <result column="i_id" property="iId" jdbcType="VARCHAR"></result>
         <result column="p_id" property="pId" jdbcType="VARCHAR"></result>
         <result column="i_p_relation" property="ipRelation" jdbcType="INTEGER"></result>
@@ -29,9 +32,11 @@
         <result column="i_card" property="iCard" jdbcType="VARCHAR"></result>
         <result column="i_birth" property="iBirth" jdbcType="DATE"></result>
         <result column="i_create_time" property="iCreateTime" jdbcType="TIMESTAMP"></result>
+
+        <result column="d_value" property="dValue" jdbcType="VARCHAR"></result>
     </resultMap>
     <!-- 插入投保人信息 -->
-    <insert id="insert" parameterType="com.soar.basicframework.insurance.model.PolicyholderInformation">
+    <insert id="insert" parameterType="com.jingji.insurance.insurance.model.PolicyholderInformation">
       INSERT INTO
         `tb_policyholder_information` (
             `p_id`,
@@ -66,7 +71,7 @@
     </insert>
 
     <!-- 插入被投保人信息 -->
-    <insert id="insertInsuredPersonInformation" parameterType="com.soar.basicframework.insurance.model.InsuredPersonInformation">
+    <insert id="insertInsuredPersonInformation" parameterType="com.jingji.insurance.insurance.model.InsuredPersonInformation">
         INSERT INTO
           `tb_insured_person_information` (
               i_id,
@@ -89,22 +94,32 @@
     </insert>
 
     <!-- 查询投保人信息,按创建时间倒序 -->
-    <select id = "getList" parameterType="com.soar.basicframework.insurance.model.PolicyholderInformation" resultMap="policyholderInformation">
-        SELECT p_id,e_number,p_name,p_card_type,p_card,p_phone,p_email,p_create_time,p_item,p_isAppend,p_insurance_date,p_price,p_isPay
-        FROM tb_policyholder_information
-        WHERE e_number = #{eNumber,jdbcType=INTEGER}
-        ORDER BY p_create_time DESC
+    <select id = "getList" parameterType="com.jingji.insurance.insurance.model.PolicyholderInformation" resultMap="policyholderInformation">
+        SELECT p_id,e_number,p_name,p_card_type,p_card,p_phone,p_email,p_create_time,p_item,p_isAppend,p_insurance_date,p_price,p_isPay,s.s_name,d.d_value
+        FROM tb_policyholder_information AS p
+        INNER JOIN tb_scheme AS s ON p.p_item = s.s_id
+        INNER JOIN tb_dict AS d ON d.d_no = p.p_card_type AND d.d_type = 1002
+        WHERE 1=1
+        <if test="eNumber != null">
+            and p.e_number = #{eNumber,jdbcType=INTEGER}
+        </if>
+
+          <if test="pCreateTime != null">
+              and to_days(p.p_create_time) = to_days(now())
+          </if>
+        ORDER BY p.p_create_time DESC
     </select>
 
     <!-- 查询被投保人信息 -->
     <select id = "getInsuredPersonInformation" resultMap="insuredPersonInformation">
-        SELECT i_id,p_id,i_p_relation,i_name,i_card_type,i_card,i_birth,i_create_time
-        FROM tb_insured_person_information
-        WHERE p_id = #{pId,jdbcType=VARCHAR}
+        SELECT i_id,p_id,i_p_relation,i_name,i_card_type,i_card,i_birth,i_create_time,d.d_value
+        FROM tb_insured_person_information AS ii
+        INNER JOIN tb_dict AS d ON d.d_no = ii.i_card_type AND d.d_type = 1002
+        WHERE ii.p_id = #{pId,jdbcType=VARCHAR}
     </select>
 
     <!-- 修改投保人支付状态 -->
-    <update id="update" parameterType="com.soar.basicframework.insurance.model.PolicyholderInformation">
+    <update id="update" parameterType="com.jingji.insurance.insurance.model.PolicyholderInformation">
         UPDATE tb_policyholder_information
         SET p_isPay = 1
         WHERE p_id = #{pId,jdbcType=VARCHAR}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.soar.basicframework.insurance.dao.SchemeDao">
-    <resultMap id="schemeMap" type="com.soar.basicframework.insurance.model.Scheme">
+<mapper namespace="com.jingji.insurance.insurance.dao.SchemeDao">
+    <resultMap id="schemeMap" type="com.jingji.insurance.insurance.model.Scheme">
         <result column="s_id" property="sId" jdbcType="INTEGER"></result>
         <result column="s_name" property="sName" jdbcType="VARCHAR"></result>
         <result column="s_premium" property="sPremium" jdbcType="VARCHAR"></result>
@@ -11,7 +11,7 @@
         <association property="schemeDetail" column="s_id" select="getDetail"></association>
     </resultMap>
 
-    <resultMap id="schemeDetailMap" type="com.soar.basicframework.insurance.model.SchemeDetail">
+    <resultMap id="schemeDetailMap" type="com.jingji.insurance.insurance.model.SchemeDetail">
         <result column="sd_id" property="sdId" jdbcType="INTEGER"></result>
         <result column="s_id" property="sId" jdbcType="INTEGER"></result>
         <result column="d_id" property="dId" jdbcType="INTEGER"></result>
@@ -33,7 +33,7 @@
         WHERE s_id = #{sId,jdbcType=INTEGER}
     </select>
 
-    <select id="getList" resultMap="schemeMap" parameterType="com.soar.basicframework.insurance.model.Scheme">
+    <select id="getList" resultMap="schemeMap" parameterType="com.jingji.insurance.insurance.model.Scheme">
         SELECT s_id,s_name,s_premium,s_remark,s_create_time
         FROM tb_scheme
     </select>

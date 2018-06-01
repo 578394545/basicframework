@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.soar.basicframework.employee.dao.EmployeeDao">
-    <select id="getList" resultType="com.soar.basicframework.employee.model.Employee" parameterType="com.soar.basicframework.employee.model.Employee">
+<mapper namespace="com.jingji.insurance.employee.dao.EmployeeDao">
+    <select id="getList" resultType="com.jingji.insurance.employee.model.Employee" parameterType="com.jingji.insurance.employee.model.Employee">
         select e_number as number , e_name as name from tb_employee
         where e_number = #{number,jdbcType=INTEGER} and e_name = #{name,jdbcType=VARCHAR}
     </select>
